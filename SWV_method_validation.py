@@ -4,7 +4,7 @@ In this file the method of calculating SWV_RF due to CH4 oxidation will be valid
 This is done by proving the Myhre plots contain linear behaviour and the griding is of minor importance
 Also the conversion from SWv mass to SWV RF will be proven
 """
-from openairclim.calc_SWV import *
+from openairclim.calc_swv import *
 def validate_grid():
 
     myhre_2a_df = construct_myhre_2a_df()
