@@ -1,2 +1,0 @@
-*.nc filter=lfs diff=lfs merge=lfs -text
-2019-01-monthly.nc filter=lfs diff=lfs merge=lfs -text
