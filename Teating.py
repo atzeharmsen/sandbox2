@@ -1,6 +1,13 @@
 import xarray as xr
 from matplotlib import pyplot as plt
 
+import numpy as np
+a = np.pi
+import pandas as pd
+df = pd.DataFrame()
+import scipy as sp
+sp.interpolate(a)
+
 # # Replace with your file path
 file_path = r"C:\Users\atzeh\PycharmProjects\OAC_Thesis\example\input\rnd_inv_2020.nc"  # or .grib, .h5
 
