@@ -1254,12 +1254,17 @@ def calc_swv_rf_float(total_SWV_mass: float):
 
 # thsi is some text tocheck the commit
 
-# delta_h = 100.0  # height increment in meters
-# delta_deg = 1.0  # latitude increment
-# heights = np.arange(0, 60000 + delta_h, delta_h)  # 0 to 60 km
-# latitudes = np.arange(-85, 86, delta_deg)  # -85° to 85°
+delta_h = 100.0  # height increment in meters
+delta_deg = 1.0  # latitude increment
+heights = np.arange(0, 60000 + delta_h, delta_h)  # 0 to 60 km
+latitudes = np.arange(-85, 86, delta_deg)  # -85° to 85°
 # tot_mass = get_total_mass(heights, latitudes, delta_h, delta_deg)
 # print(tot_mass, tot_mass / 614.2, tot_mass / (1778 - 1556.2))
+df = construct_myhre("a")
+myhre_grid = get_griddata(df, heights, latitudes, plot_data=True)
+print(myhre_grid)
+m = np.nanmean(myhre_grid)
+print(m)
 # #
 # print(calc_swv_rf(tot_mass))
 # # difference with the jupyter way of computing
