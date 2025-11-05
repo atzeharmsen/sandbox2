@@ -2142,6 +2142,7 @@ def calc_swv_rf_float(total_SWV_mass: float):
     return SWV_RF / 1000  # W/m**2
 
 
+print(calc_swv_rf_float(49.38457))
 # thsi is some text tocheck the commit
 
 # delta_h = 100.0  # height increment in meters
