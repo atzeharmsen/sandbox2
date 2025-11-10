@@ -35,10 +35,22 @@ delta_mass_1950, _, swv_distribution_1950 = calc_swv_mass_conc(
     [ch4_1946, ch4_1947, ch4_1948, ch4_1949, ch4_1950]
 )
 delta_mass_1979, _, swv_distribution_1979 = calc_swv_mass_conc(
-    [ch4_1975, ch4_1976, ch4_1977, ch4_1978, ch4_1979]
+    [
+        ch4_1975,
+        ch4_1976,
+        ch4_1977,
+        ch4_1978,
+        ch4_1979,
+    ]  # 0, 0] this makes the plot better fit...
 )
 delta_mass_2000, _, swv_distribution_2000 = calc_swv_mass_conc(
-    [ch4_1996, ch4_1997, ch4_1998, ch4_1999, ch4_2000]
+    [
+        ch4_1996,
+        ch4_1997,
+        ch4_1998,
+        ch4_1999,
+        ch4_2000,
+    ]  # 0, 0]
 )
 print(delta_mass_1750)
 print(delta_mass_1950)
@@ -127,7 +139,7 @@ ax.imshow(
     img, extent=[-87, 87, 0, 65000], aspect="auto"
 )  # adjust extent to match your data coordinates
 
-ax.levels = np.arange(0.0, 1.0, 0.1)
+ax.levels = np.arange(0.0, 1.0, 0.05)
 ax.contours = plt.contour(
     latitudes,
     heights,
@@ -136,7 +148,7 @@ ax.contours = plt.contour(
     colors="green",
     linestyles="dashed",
 )
-plt.clabel(ax.contours, inline=True, fontsize=12, fmt="%.1f")
+plt.clabel(ax.contours, inline=True, fontsize=12, fmt="%.2f")
 plt.xlabel("Latitude (deg)")
 plt.ylabel("Altitude (m)")
 plt.title("swv_distribution")
