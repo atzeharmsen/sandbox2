@@ -43,6 +43,15 @@ sys.path.append("../../openairclim")
 #%% RUN
 # change directory to match current file
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
-oac.run(
-    r"C:\Users\atzeh\PycharmProjects\OAC_Thesis\ATZE\Scenario_Analysis\GFP2050.toml"
-)
+for scenario in [
+    "\GBAU_SSP1-1_9",
+    "\GBAU_SSP2-4_5",
+    "\GBAU_SSP3-7_0",
+    "\GBAU_SSP4-6_0",
+]:
+    # for scenario in ["\GBAU", "\GCurTec", "\GFP2050", "\GFP2050cont"]:
+    oac.run(
+        r"C:\Users\atzeh\PycharmProjects\OAC_Thesis\ATZE\Scenario_Analysis"
+        + scenario
+        + ".toml"
+    )

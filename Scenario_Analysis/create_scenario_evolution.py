@@ -195,7 +195,7 @@ df[
 ] = CurTec_fuel  # hardcoded added from the different Grewe data sheet...
 
 df = df.rename(columns={"Scenario_Quantity": "Year"})
-df = df[df["Year"] >= 2020].reset_index(drop=True)
+# df = df[df["Year"] >= 2020].reset_index(drop=True)
 df = df.apply(pd.to_numeric, errors="coerce")
 
 print(df.head())
@@ -250,6 +250,6 @@ for scenario in SA_dict.keys():
         dis_per_fuel_arr=DIS_PER_FUEL_ARR,
     )
     convert_xr_to_nc(
-        norm_ds, SA_dict[scenario]["name"], "../Scenario_Analysis/evolution/"
+        norm_ds, SA_dict[scenario]["name"] + "_evo", "../Scenario_Analysis/evolution/"
     )
     plot_time_norm(norm_ds)
