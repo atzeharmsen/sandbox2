@@ -1,0 +1,147 @@
+[species]
+inv = [
+    "CO2",
+    "H2O",
+    "NOx",
+    "distance",
+]
+nox = "NO2"
+out = [
+    "CO2",
+    "H2O",
+    "O3",
+    "CH4",
+    "PMO",
+    "cont",
+    "SWV",
+]
+
+[inventories]
+dir = "C:/Users/atzeh/PycharmProjects/OAC_Thesis/ATZE/"
+files = [
+    "emi_inv_2020_DEPA.nc",
+]
+rel_to_base = false
+
+[inventories.base]
+dir = "input/"
+files = [
+    "rnd_inv_2020.nc",
+    "rnd_inv_2030.nc",
+    "rnd_inv_2040.nc",
+    "rnd_inv_2050.nc",
+]
+
+[output]
+full_run = true
+dir = "results_GBAU_SSP3-7_0/"
+name = "GBAU_SSP3-7_0"
+overwrite = true
+concentrations = false
+
+[time]
+dir = ""
+range = [
+    1940,
+    2101,
+    1,
+]
+file = "evolution/GBAU_evo.nc"
+
+[background]
+dir = "../../repository/"
+
+[background.CO2]
+file = "co2_bg.nc"
+scenario = "SSP3-7.0"
+
+[background.CH4]
+file = "ch4_bg.nc"
+scenario = "SSP3-7.0"
+
+[background.N2O]
+file = "n2o_bg.nc"
+scenario = "SSP3-7.0"
+
+[responses]
+dir = "../../repository/"
+
+[responses.CO2]
+response_grid = "0D"
+
+[responses.CO2.conc]
+method = "Sausen&Schumann"
+
+[responses.H2O]
+response_grid = "2D"
+
+[responses.H2O.rf]
+file = "resp_RF.nc"
+
+[responses.O3]
+response_grid = "2D"
+
+[responses.O3.rf]
+file = "resp_RF_O3.nc"
+
+[responses.CH4]
+response_grid = "2D"
+
+[responses.CH4.tau]
+file = "resp_ch4.nc"
+
+[responses.CH4.rf]
+method = "Etminan_2016"
+
+[responses.cont]
+response_grid = "cont"
+
+[responses.cont.resp]
+file = "resp_cont_lf.nc"
+
+[temperature]
+method = "Boucher&Reddy"
+
+[temperature.CO2]
+lambda = 0.73
+
+[temperature.H2O]
+efficacy = 1.14
+
+[temperature.O3]
+efficacy = 1.37
+
+[temperature.PMO]
+efficacy = 1.37
+
+[temperature.CH4]
+efficacy = 1.14
+
+[temperature.cont]
+efficacy = 0.59
+
+[temperature.SWV]
+efficacy = 1.14
+
+[metrics]
+types = [
+    "AGWP",
+    "ATR",
+    "AGTP",
+]
+H = [
+    20,
+]
+t_0 = [
+    2020,
+]
+
+[aircraft]
+types = [
+    "DEFAULT",
+]
+
+[aircraft.DEFAULT]
+G_250 = 1.7
+eff_fac = 1.0
+PMrel = 1.0
