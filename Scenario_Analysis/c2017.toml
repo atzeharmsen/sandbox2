@@ -16,7 +16,7 @@ out = ["CO2", "H2O", "O3", "CH4", "PMO", "cont", "SWV"]
 [inventories]
 dir = "C:/Users/atzeh/PycharmProjects/OAC_Thesis/ATZE/"
 files = [
-    "emi_inv_2000_DEPA.nc", # Check
+    "emi_inv_2020_DEPA.nc", # Check
 #    "emi_inv_2025_DEPA.nc",
 #    "emi_inv_2030_DEPA.nc",
 #    "emi_inv_2035_DEPA.nc",
@@ -46,8 +46,8 @@ base.files = [
 [output]
 # Full simulation run = true, climate metrics only = false
 full_run = true
-dir = "results_Lee/"
-name = "Lee" #Check
+dir = "results_c2017/"
+name = "c2017" #Check
 overwrite = true
 # Computation of 2D concentration responses is not yet supported.
 # possible values: false 
@@ -57,24 +57,25 @@ concentrations = false
 [time]
 dir = ""
 # Time range in years: t_start, t_end, step, (t_end not included)
-range = [2000, 2019, 1]
+range = [1940, 2101, 1]
 # Time evolution of emissions
 # either type "scaling" or type "norm"
 #file = "time_scaling_2percentgrowthperyear.nc"  # TODO Applying this scaling cause the sin patern to exist, but no extrapolation
-file = "evolution/Lee_evo.nc" # Check
+file = "evolution/constant_2017_evo.nc" # Check
 
 # Global background concentrations
 [background]
-dir = "../../repository/"
-CO2.file = "co2_bg.nc"
-CO2.scenario = "SSP2-4.5"
+dir = ""
+CO2.file = "bg_co2_c17.nc"
+CO2.scenario = "constant_2017"
+#CO2.scenario = "SSP2-4.5"
 #CO2.scenario = "SSP1-1.9"
 #CO2.scenario = "SSP4-6.0"
 #CO2.scenario = "SSP3-7.0"
-CH4.file = "ch4_bg.nc"
-CH4.scenario = "SSP2-4.5" # check SSP scenario
-N2O.file = "n2o_bg.nc"
-N2O.scenario = "SSP2-4.5"
+CH4.file = "bg_ch4_c17.nc"
+CH4.scenario = "constant_2017" #"SSP2-4.5" # check SSP scenario
+N2O.file = "bg_n2o_c17.nc"
+N2O.scenario = "constant_2017" #"SSP2-4.5"
 
 # Response options
 [responses]
@@ -117,10 +118,17 @@ SWV.efficacy = 1.14 # TODO This is taken from the source, as SWV is H2O
 [metrics]
 # iterate over elements in lists types t_0 and H
 types = ["AGWP", "ATR", "AGTP"] # valid climate metrics: AGTP, AGWP, ATR # TODO Check what metric i want
-H = [10,20,100]                        # Time horizon, t_final = t_0 + H - 1
-t_0 = [1990, 2000, 2010, 2023, 2024, 2025, 2026, 2027, 2028, 2029,
-       2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039,
-       2040, 2041, 2042, 2043, 2044, 2045, 2046, 2047, 2048, 2049, 2050]    # Start time for metrics calculation
+H = [20,100]                        # Time horizon, t_final = t_0 + H - 1
+t_0 = [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010,
+       2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021,
+       2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032,
+       2033, 2034, 2035, 2036, 2037, 2038, 2039, 2040, 2041, 2042, 2043,
+       2044, 2045, 2046, 2047, 2048, 2049, 2050, 2051, 2052, 2053, 2054,
+       2055, 2056, 2057, 2058, 2059, 2060, 2061, 2062, 2063, 2064, 2065,
+       2066, 2067, 2068, 2069, 2070, 2071, 2072, 2073, 2074, 2075, 2076,
+       2077, 2078, 2079, 2080, 2081, 2082, 2083, 2084, 2085, 2086, 2087,
+       2088, 2089, 2090, 2091, 2092, 2093, 2094, 2095, 2096, 2097, 2098,
+       2099, 2100]                   # Start time for metrics calculation
 
 # aircraft defined in inventory
 # following identifiers are NOT allowed: "TOTAL"

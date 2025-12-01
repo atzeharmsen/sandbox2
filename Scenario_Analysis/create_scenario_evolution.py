@@ -239,7 +239,7 @@ for scenario in SA_dict.keys():
         len(NORM_TIME), dtype="float32"
     )  # TODO H2O not defined by Grewe scenarios
     EI_NOx_ARR = df[SA_dict[scenario]["nox"]] / 1e9 / FUEL_ARR
-    DIS_PER_FUEL_ARR = df["All Scenarios_Flown km"] / FUEL_ARR
+    DIS_PER_FUEL_ARR = df["All Scenarios_Flown km"] / FUEL_ARR / 1e9
 
     norm_ds = create_time_normalization_xr(
         time_arr=NORM_TIME,

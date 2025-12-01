@@ -32,23 +32,23 @@ delta_mass_1750, _, swv_distribution_1750 = calc_swv_mass_conc(
     [ch4_1750, ch4_1750, ch4_1750, ch4_1750, ch4_1750]
 )
 delta_mass_1950, _, swv_distribution_1950 = calc_swv_mass_conc(
-    [ch4_1946, ch4_1947, ch4_1948, ch4_1949, ch4_1950]
+    [ch4_1950, ch4_1950, ch4_1950, ch4_1950, ch4_1950]
 )
 delta_mass_1979, _, swv_distribution_1979 = calc_swv_mass_conc(
     [
-        ch4_1975,
-        ch4_1976,
-        ch4_1977,
-        ch4_1978,
+        ch4_1979,
+        ch4_1979,
+        ch4_1979,
+        ch4_1979,
         ch4_1979,
     ]  # 0, 0] this makes the plot better fit...
 )
 delta_mass_2000, _, swv_distribution_2000 = calc_swv_mass_conc(
     [
-        ch4_1996,
-        ch4_1997,
-        ch4_1998,
-        ch4_1999,
+        ch4_2000,
+        ch4_2000,
+        ch4_2000,
+        ch4_2000,
         ch4_2000,
     ]  # 0, 0]
 )
