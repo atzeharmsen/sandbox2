@@ -9,7 +9,7 @@ calc_response ln. 131 in calc_resp_all WARNING: O3 response surface is not valid
 main ln. 175 in run WARNING: CH4 response surface is not validated!
 calc_response ln. 172 in calc_resp_sub WARNING: PMO response not validated!
 calc_response ln. 188 in calc_resp_sub WARNING: SWV response only valid after 3 years, and CH4 change larger than 2 ppbv
-main ln. 274 in run INFO: Execution time: 28.857080459594727 sec
+main ln. 274 in run INFO: Execution time: 13.009007215499878 sec
 main ln. 277 in run WARNING: OpenAirClim is currently in development phase.
 The computed output is not for scientific purposes until release of our publication.
 Amongst others, the climate impact of longer species lifetimes in the stratosphere is not considered.

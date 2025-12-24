@@ -49,9 +49,14 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 #     "\GBAU_SSP3-7_0",
 #     "\GBAU_SSP4-6_0",
 # ]:
-for scenario in ["\GBAU", "\GCurTec", "\GFP2050", "\GFP2050cont"]:
-    oac.run(
-        r"C:\Users\atzeh\PycharmProjects\OAC_Thesis\ATZE\Scenario_Analysis"
-        + scenario
-        + ".toml"
-    )
+
+for scenario in ["\c2017", "\GBAU", "\GCurTec", "\GFP2050", "\GFP2050cont"]:
+    for ssp in [
+        "_SSP5-8_5"
+    ]:  # ["_SSP1-1_9", "_SSP2-4_5", "_SSP4-6_0", "_SSP3-7_0", "_c17"]:
+        file = scenario + ssp
+        oac.run(
+            r"C:\Users\atzeh\PycharmProjects\OAC_Thesis\ATZE\Scenario_Analysis"
+            + file
+            + ".toml"
+        )
