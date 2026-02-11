@@ -134,7 +134,7 @@ def run_outputs():
     #
     #
     plt.show()
-    return  # TODO Just fo skip al stuf below
+    # return  # TODO Just fo skip al stuf below
 
     scenarios = [
         "GBAU_SSP2-4_5",
@@ -524,8 +524,295 @@ def make_backgroud_plot():
     plt.show()
 
 
+def create_appendix_plots():
+    scenarios = {
+        "GBAU": "blue",
+        "GCurTec": "red",
+        "GFP2050": "grey",
+        "GFP2050cont": "purple",
+    }
+
+    metrics = {
+        "RF": ["RF_SWV", r"RF [W m$^{-2}$]"],  # for completeness
+        "dT": ["dT_SWV", r"dT [K]"],
+        "ATR20": ["ATR_20", "[-]"],
+        "GWP20": ["AGWP_20", "[-]"],
+    }
+    ssps = {
+        "SSP1-1_9": "-",
+        "SSP2-4_5": "--",
+        "SSP3-7_0": ":",
+        "SSP4-6_0": "-.",
+        # "SSP5-8.5": " ",
+    }
+
+    for metric in metrics.keys():
+        # if metric not in ["dT", "RF"]:
+        #     continue
+        for ssp in ssps.keys():
+            for scenario in scenarios.keys():
+                label = scenario.replace("G", "")
+                file = scenario + "_" + ssp
+                # first, second, rest = label.split("_", 2)
+                # label = f"{first}"
+                if metric == "RF" or metric == "dT":
+                    ds_path = f"results_{file}/{file}.nc"
+                    data = xr.open_dataset(ds_path)
+                    metric_data = data[f"{metrics[metric][0]}"][0].values
+                    metric_time = data["time"].values
+                else:
+                    ds_path = f"results_{file}/{file}_metrics.nc"
+                    data = xr.open_dataset(ds_path)
+                    metric_data = []
+                    metric_time = range(2000, 2080)
+                    for year in metric_time:
+                        # year =2000
+                        metric_data.append(
+                            data[f"{metrics[metric][0]}_{year}"].values[-2]
+                        )  # -2 to select effect due to SWV, -1 for total
+
+                plt.figure("data", figsize=(8, 6))
+                plt.plot(
+                    metric_time,
+                    metric_data,
+                    label=file,
+                    color=scenarios[scenario],
+                    linestyle=ssps[ssp],
+                )
+                # ssp_previous = " "
+                # if ssp != ssp_previous:
+                #     pass
+
+        plt.legend()
+        plt.title(metric)
+        plt.xlim([2010, 2100])
+        # plt.xlabel("time [years]")
+
+        plt.ylabel(metrics[metric][1], fontsize=14)
+        plt.xlabel("Time [yr]", fontsize=14)
+        plt.xticks(fontsize=12)
+        plt.yticks(fontsize=12)
+        plt.grid(True)
+        plt.show()
+
+
+def load_metric_data(metric, file, metrics):
+    if metric in ["RF", "dT"]:
+        ds_path = f"results_{file}/{file}.nc"
+        data = xr.open_dataset(ds_path)
+        metric_data = data[metrics[metric][0]][0].values
+        metric_time = data["time"].values
+    else:
+        ds_path = f"results_{file}/{file}_metrics.nc"
+        data = xr.open_dataset(ds_path)
+        metric_time = range(2000, 2080)
+        metric_data = [
+            data[f"{metrics[metric][0]}_{year}"].values[-2] for year in metric_time
+        ]
+
+    return metric_time, metric_data
+
+
+def make_all_plots(savefig=False):
+    save_path = r"figures/plots/"
+
+    scenarios = {
+        "GBAU": "blue",
+        "GCurTec": "red",
+        "GFP2050": "grey",
+        "GFP2050cont": "purple",
+    }
+
+    metrics = {
+        "RF": ["RF_SWV", r"RF [W m$^{-2}$]"],  # for completeness
+        "dT": ["dT_SWV", r"dT [K]"],
+        "ATR20": ["ATR_20", "[-]"],
+        "GWP20": ["AGWP_20", "[-]"],
+    }
+    ssps = {
+        "SSP1-1_9": "-",
+        "SSP2-4_5": "--",
+        "SSP3-7_0": ":",
+        "SSP4-6_0": "-.",
+        # "SSP5-8.5": " ",
+    }
+    for metric in metrics.keys():
+
+        plt.figure(metric, figsize=(8, 6))
+
+        for ssp in ssps.keys():
+            for scenario in scenarios.keys():
+                file = scenario + "_" + ssp
+
+                metric_time, metric_data = load_metric_data(metric, file, metrics)
+
+                plt.plot(
+                    metric_time,
+                    metric_data,
+                    label=file.replace("G", ""),
+                    color=scenarios[scenario],
+                    linestyle=ssps[ssp],
+                )
+
+        # plt.title(metric)
+        plt.ylabel(metrics[metric][1], fontsize=14)
+        plt.xlabel("Time [yr]", fontsize=14)
+        plt.xlim([2010, 2100])
+        plt.grid(True)
+        plt.legend(fontsize=8)
+        if savefig:
+            plt.savefig(save_path + metric + ".png")
+        # plt.show()
+
+    for metric in metrics.keys():
+        for ssp in ssps.keys():
+
+            plt.figure(metric + ssp, figsize=(8, 6))
+
+            for scenario in scenarios.keys():
+                file = scenario + "_" + ssp
+
+                metric_time, metric_data = load_metric_data(metric, file, metrics)
+
+                plt.plot(
+                    metric_time,
+                    metric_data,
+                    label=scenario.replace("G", ""),
+                    color=scenarios[scenario],
+                    linestyle=ssps[ssp],
+                )
+
+            # plt.title(f"{metric} – {ssp}")
+            plt.ylabel(metrics[metric][1], fontsize=14)
+            plt.xlabel("Time [yr]", fontsize=14)
+            plt.xlim([2010, 2100])
+            plt.grid(True)
+            plt.legend()
+            if savefig:
+                plt.savefig(save_path + metric + ssp + ".png")
+            # plt.show()
+
+    for metric in metrics.keys():
+        for scenario in scenarios.keys():
+
+            plt.figure(metric + scenario, figsize=(8, 6))
+
+            for ssp in ssps.keys():
+                file = scenario + "_" + ssp
+
+                metric_time, metric_data = load_metric_data(metric, file, metrics)
+
+                plt.plot(
+                    metric_time,
+                    metric_data,
+                    label=ssp,
+                    color=scenarios[scenario],
+                    linestyle=ssps[ssp],
+                )
+
+            # plt.title(f"{metric} – {scenario}")
+            plt.ylabel(metrics[metric][1], fontsize=14)
+            plt.xlabel("Time [yr]", fontsize=14)
+            plt.xlim([2010, 2100])
+            plt.grid(True)
+            plt.legend()
+            if savefig:
+                plt.savefig(save_path + metric + scenario + ".png")
+    # plt.show()
+
+
+def relative_bg_scenario():
+    scenarios = {
+        "GBAU": "blue",
+        "GCurTec": "red",
+        "GFP2050": "grey",
+        "GFP2050cont": "purple",
+    }
+
+    ssps = {
+        "_SSP1-1_9": "-",
+        "_SSP2-4_5": "--",
+        "_SSP3-7_0": ":",
+        "_SSP4-6_0": "-.",
+        # "SSP5-8.5": " ",
+    }
+
+    for ref in ssps.keys():
+        if ref != "_SSP2-4_5":
+            continue
+        for scenario in scenarios.keys():
+            # ref = '_SSP2-4_5'
+            reference_ds = xr.open_dataset(
+                f"results_{scenario + ref}/{scenario + ref}.nc"
+            )
+
+            for ssp in ssps:
+                label = ssp.lstrip("_").replace("_", ".", 1)
+                case = scenario + ssp
+                ds_p = f"results_{case}/{case}.nc"
+                ds = xr.open_dataset(ds_p)
+                # RF_SWV
+                relative_data = ds["RF_SWV"][0] / reference_ds["RF_SWV"][0]
+                plt.figure("swv", figsize=(10, 6))
+                relative_data.plot(
+                    x="time",
+                    label=label,
+                    color=scenarios[scenario],
+                    linestyle=ssps[ssp],
+                )
+                plt.grid()
+                plt.xlim([2000, 2100])
+                # plt.title(f"reference = {ref}")
+                plt.ylabel(r"relative RF [-]", fontsize=14)
+                plt.xlabel("Time [yr]", fontsize=14)
+                plt.xticks(fontsize=12)
+                plt.yticks(fontsize=12)
+                plt.grid(True)
+
+                handles, labels = plt.gca().get_legend_handles_labels()
+
+                by_label = dict(zip(labels, handles))
+                plt.legend(by_label.values(), by_label.keys(), loc="upper left")
+                plt.title("")
+
+                plt.savefig(f"relative_ssp_dependency_swv.png")
+                # Ratio
+                relative_data = (ds["RF_SWV"][0] / ds["RF_CH4"][0]) / (
+                    reference_ds["RF_SWV"][0] / reference_ds["RF_CH4"][0]
+                )
+                plt.figure("ratio", figsize=(10, 6))
+                relative_data.plot(
+                    x="time",
+                    label=label,
+                    color=scenarios[scenario],
+                    linestyle=ssps[ssp],
+                )
+                plt.grid()
+                plt.xlim([2000, 2100])
+                # plt.title(f"reference = {ref}")
+                plt.ylabel(r"relative Ratio [-]", fontsize=14)
+                plt.xlabel("Time [yr]", fontsize=14)
+                plt.xticks(fontsize=12)
+                plt.yticks(fontsize=12)
+                plt.grid(True)
+
+                handles, labels = plt.gca().get_legend_handles_labels()
+
+                by_label = dict(zip(labels, handles))
+                plt.legend(by_label.values(), by_label.keys(), loc="upper left")
+                plt.title("")
+
+                plt.savefig(f"relative_ssp_dependency_ratio.png")
+                # plt.legend(loc='upper left')
+
+        plt.show()
+
+
 # run_combination_plot()
 # make_backgroud_plot()
-run_inputs()
+# run_inputs()
 
 # run_outputs()
+# create_appendix_plots()
+make_all_plots(True)
+# relative_bg_scenario()
