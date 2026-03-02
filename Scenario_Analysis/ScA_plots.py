@@ -39,6 +39,7 @@ def run_outputs():
         metric = xr.open_dataset(f"results_{scenario}/{scenario}_metrics.nc")
 
         rf_SWV = data[f"RF_SWV"][0].values
+        rf_h2o = data[f"RF_H2O"][0].values
         rf_CH4 = data[f"RF_CH4"][0].values
         try:
             ratio = rf_SWV / rf_CH4
@@ -47,26 +48,19 @@ def run_outputs():
             for i in range(len(rf_SWV)):
                 ratio[i] = rf_SWV[i] / rf_CH4[i]
 
-        # plt.figure("CH4 SSP2-4_5")
-        # plt.plot(
-        #     data["time"].values,
-        #     rf_CH4,
-        #     label="CH4" + scenario,
-        #     color=scenario_color[scenario],
-        # )
-        # plt.legend()
-        # plt.title("CH4 RF SSP2-4_5")
-        # plt.xlim([2010, 2100])
-        # plt.xlabel("time [years]")
-        # plt.ylabel(r"RF [W m$^{-2}$]")
-        # plt.grid()
-
         plt.figure("SWV SSP2-4_5", figsize=(8, 6))
         plt.plot(
             data["time"].values,
             rf_SWV,
             label=label,
             color=scenario_color[scenario],
+        )
+        plt.plot(
+            data["time"].values,
+            rf_h2o,
+            label=label + " h2o",
+            color=scenario_color[scenario],
+            linestyle="--",
         )
         plt.legend()
         # plt.title("SWV RF SSP2-4_5")
@@ -96,43 +90,6 @@ def run_outputs():
         plt.grid(True)
         plt.savefig(f"scenarios_Ratio.png")
 
-        # GWP_SWV = []
-        # GWP_tot = []
-        # ATR_SWV = []
-        # ATR_tot = []
-        # for year in range(2000, 2080):
-        #     # year =2000
-        #     GWP_SWV.append(metric[f"AGWP_20_{year}"].values[-2])
-        #     GWP_tot.append(metric[f"AGWP_20_{year}"].values[-1])
-        #     ATR_SWV.append(metric[f"ATR_20_{year}"].values[-2])
-        #     ATR_tot.append(metric[f"ATR_20_{year}"].values[-1])
-        #     # print(year, GWP_SWV)
-        # plt.figure("GWP SSP2-4_5")
-        # plt.plot(
-        #     range(2000, 2080), GWP_SWV, label=scenario, color=scenario_color[scenario]
-        # )
-        # plt.legend()
-        # plt.title("GWP20 SSP2-4_5")
-        # plt.xlim([2010, 2100])
-        # plt.xlabel("time [years]")
-        # plt.ylabel(r"GWP20 [-]")
-        # plt.grid()
-        #
-        # plt.figure("ATR20 SSP2-4_5")
-        # plt.plot(
-        #     range(2000, 2080), ATR_SWV, label=scenario, color=scenario_color[scenario]
-        # )
-        # plt.legend()
-        # plt.title("ATR20")
-        # plt.xlim([2010, 2100])
-        # plt.xlabel("time [years]")
-        # plt.ylabel(r"ATR20 [-]")
-        # plt.grid()
-
-    # results
-    #
-    #
-    #
     plt.show()
     # return  # TODO Just fo skip al stuf below
 
@@ -282,6 +239,7 @@ def run_outputs():
         metric = xr.open_dataset(f"results_{scenario}/{scenario}_metrics.nc")
 
         rf_SWV = data[f"RF_SWV"][0].values
+        rfh2o = data[f"RF_H2O"][0].values
         rf_CH4 = data[f"RF_CH4"][0].values
         try:
             ratio = rf_SWV / rf_CH4
@@ -330,39 +288,6 @@ def run_outputs():
         plt.xlim([2010, 2100])
         plt.xlabel("time [years]")
         plt.ylabel(r"[-]")
-        plt.grid(True)
-
-        GWP_SWV = []
-        GWP_tot = []
-        ATR_SWV = []
-        ATR_tot = []
-        for year in range(2000, 2080):
-            # year =2000
-            GWP_SWV.append(metric[f"AGWP_20_{year}"].values[-2])
-            GWP_tot.append(metric[f"AGWP_20_{year}"].values[-1])
-            ATR_SWV.append(metric[f"ATR_20_{year}"].values[-2])
-            ATR_tot.append(metric[f"ATR_20_{year}"].values[-1])
-            # print(year, GWP_SWV)
-        plt.figure("GWP c2017")
-        plt.plot(
-            range(2000, 2080), GWP_SWV, label=scenario, color=scenario_color[scenario]
-        )
-        plt.legend()
-        plt.title("GWP c2017")
-        plt.xlim([2010, 2100])
-        plt.xlabel("time [years]")
-        plt.ylabel(r"GWP [-]")
-        plt.grid(True)
-
-        plt.figure("ATR c2017")
-        plt.plot(
-            range(2000, 2080), ATR_SWV, label=scenario, color=scenario_color[scenario]
-        )
-        plt.legend()
-        plt.title("ATR c2017")
-        plt.xlim([2010, 2100])
-        plt.xlabel("time [years]")
-        plt.ylabel(r"ATR[-]")
         plt.grid(True)
 
     plt.show()
@@ -812,7 +737,7 @@ def relative_bg_scenario():
 # make_backgroud_plot()
 # run_inputs()
 
-# run_outputs()
+run_outputs()
 # create_appendix_plots()
-make_all_plots(True)
+# make_all_plots(True)
 # relative_bg_scenario()
